@@ -36,11 +36,11 @@ class Bird {
   type ReadonlyEmployee = Readonly<Employee>;
   // Create a CompanyEmployee class that implements ReadonlyEmployee interface
   class CompanyEmployee implements ReadonlyEmployee {
-    constructor(
+    constructor (
       readonly name: string,
       readonly level: Level,
       readonly age: number,
-      readonly skills: string) {}
+      readonly skills: string){}
   }
   const oldEmployee = new CompanyEmployee('Ivan', 'Junior', 33, 'skate');
   

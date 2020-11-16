@@ -1,43 +1,5 @@
-interface todosResponseType {
-  completed: boolean;
-  id: number;
-  title: string;
-  userId: number;
-}
-interface usersResponseType {
-  address: {
-    city: string
-    geo: {lat: string,
-          lng: string}
-    street: string
-    suite: string
-    zipcode: string
-  },
-  company: {
-    bs: string
-    catchPhrase: string
-    name: string
-  },
-  email: string
-  id: number
-  name: string
-  phone: string
-  username: string
-  website: string
-}
-
-const requestForTodos = async () => {
-  const url = `https://jsonplaceholder.typicode.com/todos`;
-  const loadData = await fetch(url);
-  const data: todosResponseType[]  = await  loadData.json();
-  return data
-}
-const requestForUsers = async () => {
-  const url = `https://jsonplaceholder.typicode.com/users`;
-  const loadData = await fetch(url);
-  const data: usersResponseType[] = await  loadData.json();
-  return data
-}
+import { requestForTodos, requestForUsers } from "./DAL";
+import { todosResponseType } from "./interface";
 
 let obj = {}
 // select book by id;
