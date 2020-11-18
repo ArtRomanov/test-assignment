@@ -25,12 +25,16 @@ class Bird {
   /* Interface */
   // Fill in the types for Employee interface
   // * `level` field must have one the following values: 'Junior' || 'Middle' || 'Senior';
-  type Level = "Junior" | "Middle" | "Senior";
   interface Employee {
     name: string;
     level: Level;
     age: number;
     skills: string;
+  }
+  enum Level {
+    Junior,
+    Middle,
+    Senior
   }
   // Create a type with fields from above being all read-only
   type ReadonlyEmployee = Readonly<Employee>;
@@ -42,9 +46,9 @@ class Bird {
       readonly age: number,
       readonly skills: string){}
   }
-  const oldEmployee = new CompanyEmployee('Ivan', 'Junior', 33, 'skate');
+  const oldEmployee = new CompanyEmployee('Ivan', Level.Junior, 33, 'skate');
   
   // Update this employee and make his level "Senior".
   // Get a `newEmployee` object with all fields from `oldEmployee`, but with `.level` set to 'Senior'?
   const newEmployee = {...oldEmployee};
-  newEmployee.level = 'Senior'  
+  newEmployee.level = Level.Senior  

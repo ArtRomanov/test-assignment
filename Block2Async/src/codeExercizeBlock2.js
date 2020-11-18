@@ -1,3 +1,4 @@
+"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -34,46 +35,15 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var _this = this;
-var requestForTodos = function () { return __awaiter(_this, void 0, void 0, function () {
-    var url, loadData, data;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0:
-                url = "https://jsonplaceholder.typicode.com/todos";
-                return [4 /*yield*/, fetch(url)];
-            case 1:
-                loadData = _a.sent();
-                return [4 /*yield*/, loadData.json()];
-            case 2:
-                data = _a.sent();
-                return [2 /*return*/, data];
-        }
-    });
-}); };
-var requestForUsers = function () { return __awaiter(_this, void 0, void 0, function () {
-    var url, loadData, data;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0:
-                url = "https://jsonplaceholder.typicode.com/users";
-                return [4 /*yield*/, fetch(url)];
-            case 1:
-                loadData = _a.sent();
-                return [4 /*yield*/, loadData.json()];
-            case 2:
-                data = _a.sent();
-                return [2 /*return*/, data];
-        }
-    });
-}); };
+exports.__esModule = true;
+var DAL_1 = require("./DAL");
 var obj = {};
 // select book by id;
-var selectById = function (id) { return __awaiter(_this, void 0, void 0, function () {
+var selectById = function (id) { return __awaiter(void 0, void 0, void 0, function () {
     var response, result;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, requestForTodos()];
+            case 0: return [4 /*yield*/, DAL_1.requestForTodos()];
             case 1:
                 response = _a.sent();
                 if (id in obj) {
@@ -97,16 +67,16 @@ selectById(1).then(function (res) {
     console.log(res);
 });
 // 1. grouping todos by users:
-var groupTodoByUser = function () { return __awaiter(_this, void 0, void 0, function () {
+var groupTodoByUser = function () { return __awaiter(void 0, void 0, void 0, function () {
     var todosGroupByUsers, response;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 todosGroupByUsers = {};
-                return [4 /*yield*/, requestForTodos()];
+                return [4 /*yield*/, DAL_1.requestForTodos()];
             case 1:
                 response = _a.sent();
-                response.map(function (todo) {
+                response.forEach(function (todo) {
                     if (todo.userId in todosGroupByUsers) {
                         todosGroupByUsers[todo.userId].push(todo);
                     }
@@ -120,11 +90,11 @@ var groupTodoByUser = function () { return __awaiter(_this, void 0, void 0, func
 }); };
 groupTodoByUser();
 // 2. select all user's todos by userId:
-var selectTodoByUserId = function (userId) { return __awaiter(_this, void 0, void 0, function () {
+var selectTodoByUserId = function (userId) { return __awaiter(void 0, void 0, void 0, function () {
     var response, result;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, requestForTodos()];
+            case 0: return [4 /*yield*/, DAL_1.requestForTodos()];
             case 1:
                 response = _a.sent();
                 result = response.filter(function (todo) { return todo.userId === userId; });
@@ -134,19 +104,17 @@ var selectTodoByUserId = function (userId) { return __awaiter(_this, void 0, voi
 }); };
 selectTodoByUserId(2);
 // 3. select todos by user name:
-var selectTodosByUserName = function (userName) { return __awaiter(_this, void 0, void 0, function () {
-    var responseUsers, resultUsersResponse, responseTodos, result;
+var selectTodosByUserName = function (userName) { return __awaiter(void 0, void 0, void 0, function () {
+    var predicate, responseUsers, resultUsersResponse, responseTodos, result;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0: return [4 /*yield*/, requestForUsers()];
+            case 0:
+                predicate = function (a) { return a.username === userName; };
+                return [4 /*yield*/, DAL_1.requestForUsers()];
             case 1:
                 responseUsers = _a.sent();
-                resultUsersResponse = responseUsers.filter(function (user) {
-                    if (user.username === userName) {
-                        return user.id;
-                    }
-                });
-                return [4 /*yield*/, requestForTodos()];
+                resultUsersResponse = responseUsers.filter(predicate);
+                return [4 /*yield*/, DAL_1.requestForTodos()];
             case 2:
                 responseTodos = _a.sent();
                 result = responseTodos.filter(function (todo) { return todo.userId === resultUsersResponse[0].id; });
